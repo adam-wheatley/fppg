@@ -1,6 +1,8 @@
 import React, { useContext, useState } from "react";
+import Grid from "styled-components-grid";
 import GameContext from "../context/game-context";
 import PlayerCard from "./PlayerCard";
+import { Container, ResultContainer, Button, NextButton } from "./styles";
 
 const Game = () => {
   const [playerIndex, setPlayerIndex] = useState(0);
@@ -8,6 +10,7 @@ const Game = () => {
   const [canSubmit, setCanSubmitState] = useState(false);
   const [submitted, setSubmittedState] = useState(false);
   const [result, setResult] = useState(false);
+  const [nextLoading, setNextLoading] = useState(false);
 
   const {
     loading,
@@ -19,11 +22,15 @@ const Game = () => {
   } = useContext(GameContext);
 
   const nextAttempt = () => {
+    setNextLoading(true);
     setCanSubmitState(false);
     setSelectedPlayer(false);
     setSubmittedState(false);
     setResult(false);
     setPlayerIndex(playerIndex + 2);
+    setTimeout(() => {
+      setNextLoading(false);
+    }, 500)
   };
 
   const selectPlayer = i => {
@@ -37,18 +44,11 @@ const Game = () => {
   };
 
   const isCorrect = () => {
-    if (
-      selectedPlayer % 2 == 0 &&
-      players[selectedPlayer].fppg > players[selectedPlayer + 1].fppg
-    ) {
-      return true;
-    } else if (
-      players[selectedPlayer].fppg > players[selectedPlayer - 1].fppg
-    ) {
-      return true;
+    if (selectedPlayer % 2 == 0) {
+      return players[selectedPlayer].fppg > players[selectedPlayer + 1].fppg;
+    } else {
+      return players[selectedPlayer].fppg > players[selectedPlayer - 1].fppg;
     }
-
-    return false;
   };
 
   const confirmAnswer = () => {
@@ -82,39 +82,61 @@ const Game = () => {
   }
 
   return (
-    <div>
-      Score: {score.toString()}
+    <Container>
+      <h1>Guess the Higher Fanduel Point's Game!</h1>
+      <h2>Current Score: {score.toString()}</h2>
       {score < 10 ? (
         <React.Fragment>
-          {submitted && <div>{result ? "Correct" : "Incorrect"}</div>}
-          <PlayerCard
-            selectPlayer={() => selectPlayer(playerIndex)}
-            player={players[playerIndex]}
-            selected={selectedPlayer === playerIndex}
-            submitted={submitted}
-          />
-          <PlayerCard
-            selectPlayer={() => selectPlayer(playerIndex + 1)}
-            player={players[playerIndex + 1]}
-            selected={selectedPlayer === playerIndex + 1}
-            submitted={submitted}
-          />
-          <button disabled={!(canSubmit && !submitted)} onClick={confirmAnswer}>
+          {submitted && (
+            <ResultContainer result={result}>
+              <h4>{result ? "Correct" : "Incorrect"}</h4>
+            </ResultContainer>
+          )}
+          {nextLoading ? (
+            <div>Loading...</div>
+          ) : (
+            <Grid>
+              <Grid.Unit size={{ xs: 1, md: 1/2}}>
+                <PlayerCard
+                  selectPlayer={() => selectPlayer(playerIndex)}
+                  player={players[playerIndex]}
+                  selected={selectedPlayer === playerIndex}
+                  submitted={submitted}
+                />
+              </Grid.Unit>
+              <Grid.Unit size={{ xs: 1, md: 1/2}}>
+                <PlayerCard
+                  selectPlayer={() => selectPlayer(playerIndex + 1)}
+                  player={players[playerIndex + 1]}
+                  selected={selectedPlayer === playerIndex + 1}
+                  submitted={submitted}
+                />
+              </Grid.Unit>
+            </Grid>
+          )}
+
+          <Button
+            color="#B2FF9E"
+            disabled={!(canSubmit && !submitted)}
+            onClick={confirmAnswer}
+          >
             Confirm
-          </button>
-          <button disabled={!submitted} onClick={nextAttempt}>
+          </Button>
+          <Button color="#0F8B8D" disabled={!submitted} onClick={nextAttempt}>
             Next
-          </button>
+          </Button>
         </React.Fragment>
       ) : (
         <React.Fragment>
           <div>
             <h1>Congratulations! You Won!</h1>
-            <button onClick={playAgain}>Play Again</button>
+            <Button color="#B2FF9E" onClick={playAgain}>
+              Play Again
+            </Button>
           </div>
         </React.Fragment>
       )}
-    </div>
+    </Container>
   );
 };
 

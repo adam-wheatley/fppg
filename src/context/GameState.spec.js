@@ -13,6 +13,10 @@ const mockData = {
         first_name: "Dave",
         player_card_url: "https://userImageUrl.com/2",
         fppg: 74,
+    }, 
+    {
+        first_name: "Bob",
+        player_card_url: "https://userImageUrl.com/2",
     }],
 };
 
@@ -40,8 +44,8 @@ describe('<GameState />', () => {
             component.update();
         });
 
-        test('should set players data and loading to false', async () => {
-            expect(component.find('MockComponent').props().players).toEqual(mockData.players);
+        test('should set players data that has fppg score and loading to false', async () => {
+            expect(component.find('MockComponent').props().players.length).toEqual(2);
             expect(component.find('MockComponent').props().loading).toEqual(false);
             expect(component.find('MockComponent').props().error).toEqual(false);
             expect(component.find('MockComponent').props().score).toEqual(0);
@@ -75,15 +79,6 @@ describe('<GameState />', () => {
                     component.find('MockComponent').props().resetGame();
                 });
                 component.update();
-                expect(component.find('MockComponent').props().score).toEqual(0);
-            });
-        });
-    
-        describe('When fetching players data is unsuccessful', () => {
-            test('should set players data and loading to false', async () => {
-                expect(component.find('MockComponent').props().players).toEqual(mockData.players);
-                expect(component.find('MockComponent').props().loading).toEqual(false);
-                expect(component.find('MockComponent').props().error).toEqual(false);
                 expect(component.find('MockComponent').props().score).toEqual(0);
             });
         });

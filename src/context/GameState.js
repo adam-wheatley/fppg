@@ -21,7 +21,7 @@ const GameState = props => {
     fetch(process.env.REACT_APP_PLAYERS_API)
       .then(response => response.json())
       .then(data => {
-        setPlayers(data.players);
+        setPlayers(shuffleArray(data.players.filter(player => player.fppg)));
         setLoading(false);
       })
       .catch(() => {
