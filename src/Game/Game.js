@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import GameContext from "../context/game-context";
+import PlayerCard from "./PlayerCard";
 
 const Game = () => {
   const [playerIndex, setPlayerIndex] = useState(0);
@@ -86,16 +87,18 @@ const Game = () => {
       {score < 10 ? (
         <React.Fragment>
           {submitted && <div>{result ? "Correct" : "Incorrect"}</div>}
-          <div onClick={() => selectPlayer(playerIndex)}>
-            Player 1: {players[playerIndex].first_name}
-            {(selectedPlayer === playerIndex && !submitted) ? " Selected" : ""}
-            {submitted && <span>{players[playerIndex].fppg.toString()}</span>}
-          </div>
-          <div onClick={() => selectPlayer(playerIndex + 1)}>
-            Player 2: {players[playerIndex + 1].first_name}
-            {selectedPlayer === playerIndex + 1 ? " Selected" : ""}
-            {submitted && <span>FPPG: {players[playerIndex + 1].fppg.toString()}</span>}
-          </div>
+          <PlayerCard
+            selectPlayer={() => selectPlayer(playerIndex)}
+            player={players[playerIndex]}
+            selected={selectedPlayer === playerIndex}
+            submitted={submitted}
+          />
+          <PlayerCard
+            selectPlayer={() => selectPlayer(playerIndex + 1)}
+            player={players[playerIndex + 1]}
+            selected={selectedPlayer === playerIndex + 1}
+            submitted={submitted}
+          />
           <button disabled={!(canSubmit && !submitted)} onClick={confirmAnswer}>
             Confirm
           </button>
