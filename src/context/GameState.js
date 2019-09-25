@@ -25,6 +25,7 @@ const GameState = props => {
         setLoading(false);
       })
       .catch(() => {
+        setLoading(false);
         setError(true);
       });
   }, []);
