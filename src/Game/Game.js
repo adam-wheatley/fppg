@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import Grid from "styled-components-grid";
 import GameContext from "../context/game-context";
 import PlayerCard from "./PlayerCard";
-import { Container, ResultContainer, Button, NextButton } from "./styles";
+import { Container, ResultContainer, Button } from "./styles";
 
 const Game = () => {
   const [playerIndex, setPlayerIndex] = useState(0);
@@ -44,6 +44,7 @@ const Game = () => {
   };
 
   const isCorrect = () => {
+    // eslint-disable-next-line eqeqeq
     if (selectedPlayer % 2 == 0) {
       return players[selectedPlayer].fppg > players[selectedPlayer + 1].fppg;
     } else {
@@ -88,7 +89,7 @@ const Game = () => {
       {score < 10 ? (
         <React.Fragment>
           {submitted && (
-            <ResultContainer result={result}>
+            <ResultContainer result={result.toString()}>
               <h4>{result ? "Correct" : "Incorrect"}</h4>
             </ResultContainer>
           )}
