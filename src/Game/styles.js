@@ -21,4 +21,5 @@ export const Button = styled.button`
     color: #000;
     min-width: 150px;
     margin: 15px;
+    cursor: ${(props) => props.disabled ? 'auto' : 'pointer'};
 `;

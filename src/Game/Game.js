@@ -30,7 +30,7 @@ const Game = () => {
     setPlayerIndex(playerIndex + 2);
     setTimeout(() => {
       setNextLoading(false);
-    }, 500)
+    }, 500);
   };
 
   const selectPlayer = i => {
@@ -97,7 +97,7 @@ const Game = () => {
             <div>Loading...</div>
           ) : (
             <Grid>
-              <Grid.Unit size={{ xs: 1, md: 1/2}}>
+              <Grid.Unit size={{ xs: 1, md: 1 / 2 }}>
                 <PlayerCard
                   selectPlayer={() => selectPlayer(playerIndex)}
                   player={players[playerIndex]}
@@ -105,7 +105,7 @@ const Game = () => {
                   submitted={submitted}
                 />
               </Grid.Unit>
-              <Grid.Unit size={{ xs: 1, md: 1/2}}>
+              <Grid.Unit size={{ xs: 1, md: 1 / 2 }}>
                 <PlayerCard
                   selectPlayer={() => selectPlayer(playerIndex + 1)}
                   player={players[playerIndex + 1]}
@@ -116,16 +116,20 @@ const Game = () => {
             </Grid>
           )}
 
-          <Button
-            color="#B2FF9E"
-            disabled={!(canSubmit && !submitted)}
-            onClick={confirmAnswer}
-          >
-            Confirm
-          </Button>
-          <Button color="#0F8B8D" disabled={!submitted} onClick={nextAttempt}>
-            Next
-          </Button>
+          {!submitted && (
+            <Button
+              color="#B2FF9E"
+              disabled={!(canSubmit && !submitted)}
+              onClick={confirmAnswer}
+            >
+              Confirm Answer
+            </Button>
+          )}
+          {submitted && (
+            <Button color="#0F8B8D" disabled={!submitted} onClick={nextAttempt}>
+              Next
+            </Button>
+          )}
         </React.Fragment>
       ) : (
         <React.Fragment>

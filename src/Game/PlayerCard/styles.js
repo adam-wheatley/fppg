@@ -6,6 +6,7 @@ export const Container = styled.div`
     color: #000;
     border-radius: 50px;
     padding: 15px;
+    cursor: pointer;
     border: ${({ selected }) => selected ? `
         5px solid blue;
     ` : '5px solid grey'};
