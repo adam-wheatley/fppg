@@ -4,18 +4,9 @@ import { ThemeProvider } from "styled-components";
 import { Normalize } from "styled-normalize";
 import * as serviceWorker from "./serviceWorker";
 import GlobalStyle from "./styles/global";
+import theme from './styles/theme';
 import GameState from "./context/GameState";
 import Game from "./Game";
-
-const theme = {
-  breakpoints: {
-    xs: 0,
-    sm: 576,
-    md: 768,
-    lg: 992,
-    xl: 1200
-  }
-};
 
 ReactDOM.render(
   <ThemeProvider theme={theme}>

@@ -28,9 +28,7 @@ const Game = () => {
     setSubmittedState(false);
     setResult(false);
     setPlayerIndex(playerIndex + 2);
-    setTimeout(() => {
-      setNextLoading(false);
-    }, 500);
+    setNextLoading(false);
   };
 
   const selectPlayer = i => {
@@ -85,12 +83,12 @@ const Game = () => {
   return (
     <Container>
       <h1>Guess the Higher Fanduel Point's Game!</h1>
-      <h2>Current Score: {score.toString()}</h2>
+      <h2 data-at="current-score">Current Score: {score.toString()}</h2>
       {score < 10 ? (
         <React.Fragment>
           {submitted && (
             <ResultContainer result={result.toString()}>
-              <h4>{result ? "Correct" : "Incorrect"}</h4>
+              <h4 data-at="result">{result ? "Correct" : "Incorrect"}</h4>
             </ResultContainer>
           )}
           {nextLoading ? (
@@ -118,6 +116,7 @@ const Game = () => {
 
           {!submitted && (
             <Button
+              data-at="confirm-answer-btn"
               color="#B2FF9E"
               disabled={!(canSubmit && !submitted)}
               onClick={confirmAnswer}
@@ -126,20 +125,23 @@ const Game = () => {
             </Button>
           )}
           {submitted && (
-            <Button color="#0F8B8D" disabled={!submitted} onClick={nextAttempt}>
+            <Button
+              data-at="next-btn"
+              color="#0F8B8D"
+              disabled={!submitted}
+              onClick={nextAttempt}
+            >
               Next
             </Button>
           )}
         </React.Fragment>
       ) : (
-        <React.Fragment>
-          <div>
+          <div data-at="winners-message">
             <h1>Congratulations! You Won!</h1>
             <Button color="#B2FF9E" onClick={playAgain}>
               Play Again
             </Button>
           </div>
-        </React.Fragment>
       )}
     </Container>
   );
