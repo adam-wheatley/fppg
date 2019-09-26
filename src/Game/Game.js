@@ -1,8 +1,8 @@
-import React, { useContext, useState } from "react";
-import Grid from "styled-components-grid";
-import GameContext from "../context/game-context";
-import PlayerCard from "./PlayerCard";
-import { Container, ResultContainer, Button } from "./styles";
+import React, { useContext, useState } from 'react';
+import Grid from 'styled-components-grid';
+import GameContext from '../context/game-context';
+import PlayerCard from './PlayerCard';
+import { Container, ResultContainer, Button } from './styles';
 
 const Game = () => {
   const [playerIndex, setPlayerIndex] = useState(0);
@@ -45,9 +45,8 @@ const Game = () => {
     // eslint-disable-next-line eqeqeq
     if (selectedPlayer % 2 == 0) {
       return players[selectedPlayer].fppg > players[selectedPlayer + 1].fppg;
-    } else {
-      return players[selectedPlayer].fppg > players[selectedPlayer - 1].fppg;
     }
+    return players[selectedPlayer].fppg > players[selectedPlayer - 1].fppg;
   };
 
   const confirmAnswer = () => {
@@ -74,21 +73,21 @@ const Game = () => {
   if (error) {
     return (
       <div>
-        There seem's to have been an error. Please refresh you're browser and
-        try again.
+        There seem&apos;s to have been an error. Please refresh you&apos;re
+        browser and try again.
       </div>
     );
   }
 
   return (
     <Container>
-      <h1>Guess the Higher Fanduel Point's Game!</h1>
+      <h1>Guess the Higher Fanduel Point&apos;s Game!</h1>
       <h2 data-at="current-score">Current Score: {score.toString()}</h2>
       {score < 10 ? (
-        <React.Fragment>
+        <>
           {submitted && (
             <ResultContainer result={result.toString()}>
-              <h4 data-at="result">{result ? "Correct" : "Incorrect"}</h4>
+              <h4 data-at="result">{result ? 'Correct' : 'Incorrect'}</h4>
             </ResultContainer>
           )}
           {nextLoading ? (
@@ -134,14 +133,14 @@ const Game = () => {
               Next
             </Button>
           )}
-        </React.Fragment>
+        </>
       ) : (
-          <div data-at="winners-message">
-            <h1>Congratulations! You Won!</h1>
-            <Button color="#B2FF9E" onClick={playAgain}>
-              Play Again
-            </Button>
-          </div>
+        <div data-at="winners-message">
+          <h1>Congratulations! You Won!</h1>
+          <Button color="#B2FF9E" onClick={playAgain}>
+            Play Again
+          </Button>
+        </div>
       )}
     </Container>
   );

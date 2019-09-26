@@ -1,27 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import shuffle from '../utils/shuffle';
+import GameContext from './game-context';
 
-import GameContext from "./game-context";
-
-const GameState = props => {
+const GameState = ({ children }) => {
   const [players, setPlayers] = useState([]);
-
   const [loading, setLoading] = useState(true);
   const [score, setScore] = useState(0);
   const [error, setError] = useState(false);
-
-  const shuffleArray = a => {
-    for (let i = a.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [a[i], a[j]] = [a[j], a[i]];
-    }
-    return a;
-  };
 
   useEffect(() => {
     fetch(process.env.REACT_APP_PLAYERS_API)
       .then(response => response.json())
       .then(data => {
-        setPlayers(shuffleArray(data.players.filter(player => player.fppg)));
+        setPlayers(shuffle(data.players.filter(player => player.fppg)));
         setLoading(false);
       })
       .catch(() => {
@@ -35,9 +27,9 @@ const GameState = props => {
   const resetGame = () => {
     setLoading(true);
     setScore(0);
-    setPlayers(shuffleArray(players));
+    setPlayers(shuffle(players));
     setLoading(false);
-  }
+  };
 
   return (
     <GameContext.Provider
@@ -48,12 +40,19 @@ const GameState = props => {
         resetScore,
         incrementScore,
         error,
-        resetGame,
+        resetGame
       }}
     >
-      {props.children}
+      {children}
     </GameContext.Provider>
   );
+};
+
+GameState.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ]).isRequired
 };
 
 export default GameState;

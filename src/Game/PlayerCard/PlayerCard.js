@@ -1,6 +1,6 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Container, PlayerImage } from "./styles";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Container, PlayerImage } from './styles';
 
 const PlayerCard = ({ player, selected, submitted, selectPlayer }) => (
   <Container data-at="player-card" onClick={selectPlayer} selected={selected}>
@@ -10,13 +10,15 @@ const PlayerCard = ({ player, selected, submitted, selectPlayer }) => (
       src={player.images.default.url}
       alt={`${player.first_name.toLowerCase()}-avatar`}
     />
-    {submitted && <h3 data-at="fanduel-points">Fanduel Points: {player.fppg.toString()}</h3>}
+    {submitted && (
+      <h3 data-at="fanduel-points">Fanduel Points: {player.fppg.toString()}</h3>
+    )}
   </Container>
 );
 
-PropTypes.defaultProps = {
+PlayerCard.defaultProps = {
   selected: false,
-  submitted: false,
+  submitted: false
 };
 
 PlayerCard.propTypes = {
@@ -27,11 +29,11 @@ PlayerCard.propTypes = {
         url: PropTypes.string.isRequired
       }).isRequired
     }).isRequired,
-    fppg: PropTypes.number.isRequired,
-  }),
+    fppg: PropTypes.number.isRequired
+  }).isRequired,
   selected: PropTypes.bool,
   submitted: PropTypes.bool,
-  selectPlayer: PropTypes.func.isRequired,
+  selectPlayer: PropTypes.func.isRequired
 };
 
 export default PlayerCard;
